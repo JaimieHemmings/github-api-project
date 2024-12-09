@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 const AboutRoute = () => {
   return (
     <>
-    <section className="py-32">
-      <div className="container mx-auto">
+    <section className="pt-12">
+      <div className="container mx-auto p-5">
         <div className="grid items-center gap-8 lg:grid-cols-2">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
             <Badge variant="outline">
@@ -25,12 +25,12 @@ const AboutRoute = () => {
             <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
               The Project si created using Vite, TypeScript, TailwindCSS and the amazing Shadcn/ui component Library.
             </p>
-            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
+            <div className="flex md:w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
               <Link to="/">
-                <Button className="w-full sm:w-auto">Home</Button>
+                <Button className="md:w-full sm:w-auto">Home</Button>
               </Link>
               <Link to="/contact">
-                <Button variant="outline" className="w-full sm:w-auto">
+                <Button variant="outline" className="md:w-full sm:w-auto">
                   Get in touch?
                   <ArrowUpRight className="ml-2 size-4" />
                 </Button>
@@ -41,7 +41,7 @@ const AboutRoute = () => {
         </div>
       </div>
     </section>
-    <section className="py-32">
+    <section className="py-12">
       <div className="container mx-auto">
         <div className="flex flex-col items-center text-center">
           <p className="mb-16 max-w-4xl px-8 font-medium lg:text-3xl">
