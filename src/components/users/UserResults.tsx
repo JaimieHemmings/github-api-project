@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import UserItem from '@/components/users/UserItem';
+import GithubContext from '@/context/github/GithubContext';
 
 type User = {
   login: string;
@@ -10,24 +11,13 @@ type User = {
 };
 
 const UserResults: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { users, loading, fetchUsers } = useContext(GithubContext) as {
+    users: User[];
+    loading: boolean;
+    fetchUsers: () => Promise<void>;
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const response = await fetch(`${import.meta.env.VITE_GITHUB_URL}/users`, {
-        headers: {
-          Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
-        },
-      });
-
-      const data: User[] = await response.json();
-      setUsers(data.slice(0, 12)); 
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
-    };
-
     fetchUsers();
   }, []);
 
@@ -35,14 +25,12 @@ const UserResults: React.FC = () => {
     return (
       <section className="container mx-auto p-5">
         <div className="container flex flex-col items-center text-center">
-          <p className="semibold">We&apos;re hiring</p>
-          <h2 className="my-6 text-pretty text-2xl font-bold lg:text-4xl">
-            Meet our team
+          <p className="semibold">With Millions of</p>
+          <h2 className="my-2 mb-6 text-pretty text-2xl font-bold lg:text-4xl">
+            Github Users
           </h2>
           <p className="mb-8 max-w-3xl text-muted-foreground lg:text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Elig
-            doloremque mollitia fugiat omnis! Porro facilis quo animi consequatur.
-            Explicabo.
+            Github has a large community of developers and users. Here are some of the users on Github.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 md:grid-cols-3">

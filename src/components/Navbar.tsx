@@ -20,7 +20,7 @@ const navItems: NavItem[] = [
 
 const NavBar = () => {
   return (
-    <header className="py-4 fixed top-0 w-full max-md:px-5 bg-slate-50 z-[999]">
+    <header className="py-2 fixed top-0 w-full max-md:px-5 bg-slate-50 z-[999]">
       <div className="container mx-auto flex items-center justify-between gap-10 ">
         <div>
           <Link to="/">
@@ -30,8 +30,8 @@ const NavBar = () => {
             </div>
           </Link>
         </div>
-        <nav>
-          <ul className="flex items-center gap-5">
+        <nav className="w-full">
+          <ul className="flex items-center justify-end gap-5">
             {navItems.map((item) => (
               <li key={item.id}>
                 <Link to={item.href} className="text-slate-900 hover:text-slate-700 font-semibold">
