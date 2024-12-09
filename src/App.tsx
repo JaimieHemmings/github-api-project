@@ -13,7 +13,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    <div className="min-h-screen py-24">
+    <div className="min-h-screen pt-24">
       <Navbar />
       <Routes>
         <Route path="/" element={<HomeRoute />} />

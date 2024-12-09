@@ -1,17 +1,41 @@
-import {FaHome} from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { ArrowDownRight } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const NotFoundRoute = () => {
   return (
-    <div className="container mx-auto p-5 text-center">
-      <h1 className="text-3xl font-bold">Not Found</h1>
-      <span className="text-8xl font-bold text-slate-300 my-12 block">404</span>
-      <p>Something has gone terribly wrong...</p>
-      <p className="mb-12">Let's get you back home?</p>
-      <Link to="/" className="text-blue-500 hover:underline">
-        <FaHome className="inline-block" /> Home
-      </Link>
-    </div>
+    <section className="py-32">
+      <div className="container mx-auto">
+        <div className="grid items-center gap-8 lg:grid-cols-2">
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            <Badge variant="outline">
+              Error: 404
+              <ArrowDownRight className="ml-2 size-4" />
+            </Badge>
+            <h1 className="my-6 text-pretty text-4xl font-bold lg:text-6xl">
+              Something has gone wrong
+            </h1>
+            <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
+              Maybe the hamsters fell asleep again. We couldn't find what you were looking for. Would you like to go back to the homepage?
+            </p>
+            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
+              <Link to="/">
+                <Button className="w-full sm:w-auto">Home</Button>
+              </Link>
+              <Link to="/contact">
+                <Button variant="outline" className="w-full sm:w-auto">
+                  Get in touch?
+                  <ArrowDownRight className="ml-2 size-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <FaGithub className="w-full h-auto" />
+        </div>
+      </div>
+    </section>
   )
 }
 

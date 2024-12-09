@@ -1,14 +1,14 @@
-import { Button } from '../components/ui/button'
+import UserResults from '@/components/users/UserResults'
+import Hero from '@/components/Hero'
+import Carousel from '@/components/Carousel'
 
 const HomeRoute = () => {
-  return (
-    
+  return (    
     <>
-    <div className="container mx-auto">
-      <h1 className='text-2xl font-bold'>Hello</h1>
-      <Button>Click me</Button>
-    </div>
-  </>
+      <Hero />
+      <Carousel />
+      <UserResults />
+    </>
   )
 }
 

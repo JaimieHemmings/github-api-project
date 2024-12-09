@@ -20,11 +20,14 @@ const navItems: NavItem[] = [
 
 const NavBar = () => {
   return (
-    <header className="py-4 fixed top-0 w-full max-md:px-5 bg-slate-50">
+    <header className="py-4 fixed top-0 w-full max-md:px-5 bg-slate-50 z-[999]">
       <div className="container mx-auto flex items-center justify-between gap-10 ">
         <div>
           <Link to="/">
-            <FaGithub className="text-2xl font-bold" />
+            <div className="flex flex-row gap-1">
+              <FaGithub className="text-2xl font-bold inline-block" />
+              <span className="font-semibold">GithubRef</span>
+            </div>
           </Link>
         </div>
         <nav>
@@ -39,7 +42,7 @@ const NavBar = () => {
           </ul>
         </nav>
         <Link to="/contact">
-          <Button className="font-semibold">Contact</Button>
+          <Button className="font-semibold hover:bg-slate-700">Contact</Button>
         </Link>
       </div>
     </header>
