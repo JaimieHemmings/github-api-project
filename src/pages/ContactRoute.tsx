@@ -38,16 +38,16 @@ const ContactRoute = () => {
           <div>
             <h3 className="text-lg font-semibold mb-2">Social Media</h3>
             <div className="flex gap-4">
-              <Button variant="outline" size="icon">
-                <a href="https://github.com/JaimieHemmings" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/JaimieHemmings" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="icon">
                   <FaGithub className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button variant="outline" size="icon">
-                <a href="https://www.linkedin.com/in/jaimiehemmings/" target="_blank" rel="noopener noreferrer">
+                </Button>
+              </a>
+              <a href="https://www.linkedin.com/in/jaimiehemmings/" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="icon">
                   <FaLinkedin className="h-5 w-5" />
-                </a>
-              </Button>
+                </Button>
+              </a>
             </div>
           </div>
         </CardContent>
