@@ -1,14 +1,16 @@
 import React, { useState, useContext } from 'react';
-import GithubContext from '@/context/github/GithubContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import GithubContext from '@/context/github/GithubContext';
+import AlertContext from '@/context/alert/AlertContext';
 
 const UserSearch: React.FC = () => {
   const [query, setQuery] = useState('');
   const { fetchSearchResults } = useContext(GithubContext) as {
     fetchSearchResults: (query: string) => Promise<void>;
   };
+  const {setAlert} = useContext(AlertContext) as {setAlert: (msg: string, type: string) => void};
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +20,7 @@ const UserSearch: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim() === '') {
-      alert('Please enter a search query');
+      setAlert('Please enter a search query', 'warning');
       return;
     } else {
       fetchSearchResults(query);
