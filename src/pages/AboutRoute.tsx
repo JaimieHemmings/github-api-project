@@ -23,7 +23,7 @@ const AboutRoute = () => {
               This is a project developed to explore the Github API and its features. It is a simple project that allows you to search for users and repositories on Github.
             </p>
             <p className="mb-8 max-w-xl text-muted-foreground lg:text-xl">
-              The Project si created using Vite, TypeScript, TailwindCSS and the amazing Shadcn/ui component Library.
+              The Project is created using Vite, TypeScript, TailwindCSS and the amazing Shadcn/ui component Library.
             </p>
             <div className="flex md:w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
               <Link to="/">
