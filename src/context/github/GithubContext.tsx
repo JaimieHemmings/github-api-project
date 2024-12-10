@@ -1,87 +1,124 @@
-import React, { createContext, useReducer, useEffect, ReactNode } from 'react';
+import React, { createContext, useReducer, useEffect, ReactNode, useCallback } from 'react';
 import githubReducer from './GithubReducer';
 
-type User = {
-  login: string;
-  id: number;
-  avatar_url: string;
-  html_url: string;
-};
+import { GithubStateType } from '@/types/types';
 
-type GithubContextType = {
-  users: User[];
-  searchResults?: User[];
-  loading: boolean;
+type GithubContextType = GithubStateType & {
   fetchUsers: () => Promise<void>;
   fetchSearchResults: (query: string) => Promise<void>;
+  getUser: (login: string) => Promise<void>;
 };
-
-const GithubContext = createContext<GithubContextType | undefined>(undefined);
-
-const GITHUB_URL = import.meta.env.VITE_GITHUB_URL;
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 type GithubProviderProps = {
   children: ReactNode;
 };
 
-export const GithubProvider: React.FC<GithubProviderProps> = ({ children }) => {
-  const initialState = {
-    users: [],
-    loading: false,
-    searchResults: [],
-  }
+// Constants
+const GITHUB_URL = import.meta.env.VITE_GITHUB_URL;
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
+// Initial State
+const initialState: GithubStateType = {
+  user: null,
+  users: [],
+  searchResults: [],
+  loading: false,
+};
+
+// Context Creation
+const GithubContext = createContext<GithubContextType | undefined>(undefined);
+
+export const GithubProvider: React.FC<GithubProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
-  const fetchUsers = async () => {
-    setLoading();
-    const response = await fetch(`${GITHUB_URL}/users`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
-    });
+  // Centralized fetch method
+  const fetchFromGitHub = async (
+    url: string, 
+    actionType: any, 
+    transformData?: (data: any) => any
+  ) => {
+    try {
+      dispatch({ type: 'SET_LOADING', payload: true });
+      
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `token ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json'
+        },
+      });
 
-    const data: User[] = await response.json();
-    dispatch({
-      type: 'FETCH_USERS',
-      payload: data.slice(0, 12),
-    })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const payload = transformData ? transformData(data) : data;
+
+      dispatch({
+        type: actionType,
+        payload
+      });
+    } catch (error) {
+      console.error('GitHub API Error:', error);
+      
+      // Handle specific error scenarios
+      if (error instanceof Error && error.message.includes('404')) {
+        window.location.href = '/notfound';
+      }
+
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
   };
 
-  const fetchSearchResults = async (query: string) => {
-    setLoading();
-    const response = await fetch(`${GITHUB_URL}/search/users?q=${query}`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
-    });
-
-    const data = await response.json();
-    dispatch({
-      type: 'FETCH_SEARCH_RESULTS',
-      payload: data.items,
-    });
-  };
-
-  // Set loading
-  const setLoading = () => dispatch({ type: 'SET_LOADING', payload: true });
-
-  useEffect(() => {
-    fetchUsers();
+  // Memoized fetch methods to prevent unnecessary re-renders
+  const fetchUsers = useCallback(() => {
+    return fetchFromGitHub(
+      `${GITHUB_URL}/users`, 
+      'FETCH_USERS'
+    );
   }, []);
 
+  const getUser = useCallback((login: string) => {
+    return fetchFromGitHub(
+      `${GITHUB_URL}/users/${login}`, 
+      'GET_USER'
+    );
+  }, []);
+
+  const fetchSearchResults = useCallback((query: string) => {
+    return fetchFromGitHub(
+      `${GITHUB_URL}/search/users?q=${query}`, 
+      'FETCH_SEARCH_RESULTS',
+      (data) => data.items
+    );
+  }, []);
+
+  // Initial users fetch
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
   return (
-    <GithubContext.Provider value={{
-        users: state.users,
-        loading: state.loading,
-        searchResults: state.searchResults,
+    <GithubContext.Provider 
+      value={{
+        ...state,
         fetchUsers,
-        fetchSearchResults
-      }}>
+        fetchSearchResults,
+        getUser,
+      }}
+    >
       {children}
     </GithubContext.Provider>
   );
 };
 
 export default GithubContext;
+
+// Custom hook for using GitHub context
+export const useGithubContext = () => {
+  const context = React.useContext(GithubContext);
+  if (context === undefined) {
+    throw new Error('useGithubContext must be used within a GithubProvider');
+  }
+  return context;
+};

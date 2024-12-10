@@ -5,39 +5,54 @@ type User = {
   html_url: string;
 };
 
-type State = {
+// Define the shape of the state
+type GithubState = {
+  user: User | null;
   users: User[];
+  searchResults: User[];
   loading: boolean;
-  searchResults?: User[];
 };
 
-type Action =
+// Define action types
+type GithubAction = 
   | { type: 'FETCH_USERS'; payload: User[] }
-  | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'FETCH_SEARCH_RESULTS'; payload: User[] };
+  | { type: 'GET_USER'; payload: User }
+  | { type: 'FETCH_SEARCH_RESULTS'; payload: User[] }
+  | { type: 'SET_LOADING'; payload: boolean };
 
-  const githubReducer = (state: State, action: Action): State => {
-    switch (action.type) {
-      case 'FETCH_USERS':
-        return {
-          ...state,
-          users: action.payload,
-          loading: false,
-        };
-      case 'FETCH_SEARCH_RESULTS':
-        return {
-          ...state,
-          searchResults: action.payload,
-          loading: false,
-        };
-      case 'SET_LOADING':
-        return {
-          ...state,
-          loading: true,
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default githubReducer;
+// Reducer function
+const githubReducer = (state: GithubState, action: GithubAction): GithubState => {
+  switch (action.type) {
+    case 'FETCH_USERS':
+      return {
+        ...state,
+        users: action.payload,
+        loading: false
+      };
+    
+    case 'GET_USER':
+      return {
+        ...state,
+        user: action.payload,
+        loading: false
+      };
+    
+    case 'FETCH_SEARCH_RESULTS':
+      return {
+        ...state,
+        searchResults: action.payload,
+        loading: false
+      };
+    
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.payload
+      };
+    
+    default:
+      return state;
+  }
+};
+
+export default githubReducer;

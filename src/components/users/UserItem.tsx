@@ -1,5 +1,6 @@
 import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';import {
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
   Card,
   CardHeader,
   CardTitle,
@@ -34,7 +35,8 @@ const UserItem: React.FC<UserItemProps> = ({ user }) => {
           <CardHeader>
             <CardTitle className="mx-auto">{user.login}</CardTitle>
             <div className="py-2 flex flex-col gap-2 align-middle w-full">
-              <Link to={`/users/${user.login}`} target="_blank" rel="noopener noreferrer" className="block w-full">
+              <Link to={`/user/${user.login}`}
+                className="block w-full">
                 <Button className="bg-white text-slate-900 hover:text-white hover:bg-slate-900 transition-all block w-full">
                   Details
                 </Button>

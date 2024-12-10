@@ -34,7 +34,7 @@ const UserResults: React.FC = () => {
           </p>
         </div>
         <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 md:grid-cols-3">
-          {users.map((user) => (
+          {users.slice(0,12).map((user) => (
             <UserItem key={user.id} user={user} />
           ))}
         </div>
