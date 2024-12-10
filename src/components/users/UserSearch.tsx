@@ -36,7 +36,7 @@ const UserSearch: React.FC = () => {
         </h2>
         <p>Looking for someone in particular?</p>
       </div>
-      <form onSubmit={handleSubmit} className="flex items-center">
+      <form onSubmit={handleSubmit} className="flex items-center md:max-w-[50%] md:mx-auto">
         <Input
           type="text"
           value={query}
