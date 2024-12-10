@@ -62,7 +62,7 @@ const Logos3 = () => {
               {logos.map((logo) => (
                 <CarouselItem
                   key={logo.id}
-                  className="basis-1/1 pl-0 md:basis-1/5 lg:basis-1/6"
+                  className="basis-1/1 pl-0 sm:basis-1/2 md:basis-1/5 lg:basis-1/6"
                 >
                   <div className="mx-10 flex shrink-0 items-center justify-center align-middle">
                     <div className="flex flex-col justify-between h-full">
