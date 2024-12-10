@@ -4,7 +4,7 @@ import { useGithubContext } from '@/context/github/GithubContext';
 import {FaCodepen, FaStore, FaUserFriends, FaUsers} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { Card, CardHeader, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -56,8 +56,8 @@ const UserRoute: React.FC = () => {
 
   return (
     <div className="container mx-auto py-12">
-      <Card className="p-5">
-        <div className="flex flex-row justify-between">
+      <Card className="p-5 border-none drop-shadow-none shadow-none">
+        <div className="flex flex-col md:flex-row justify-between">
           <div className="basis-1/3">
           <CardHeader className="flex items-center">
             <Avatar className="w-[70%] my-auto h-auto border">
@@ -69,14 +69,15 @@ const UserRoute: React.FC = () => {
                 <p><strong>Location:</strong> {user.location}</p>
                 <p>{user.bio}</p>
                 <p>{user.blog}</p>
-                <a
-                  href={user.html_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  View GitHub Profile
-                </a>
+                <Button>
+                  <a
+                    href={user.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
+                    View GitHub Profile
+                  </a>
+                </Button>
               </div>
             </CardHeader>
           </div>
