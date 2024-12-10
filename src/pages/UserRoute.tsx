@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGithubContext } from '@/context/github/GithubContext';
 import {FaCodepen, FaStore, FaUserFriends, FaUsers} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
