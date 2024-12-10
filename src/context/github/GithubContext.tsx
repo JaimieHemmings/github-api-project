@@ -60,7 +60,7 @@ export const GithubProvider: React.FC<GithubProviderProps> = ({ children }) => {
     const data = await response.json();
     dispatch({
       type: 'FETCH_SEARCH_RESULTS',
-      payload: data,
+      payload: data.items,
     });
   };
 

@@ -13,13 +13,10 @@ const SearchResults: React.FC = () => {
     searchResults: any;
   };
 
-  console.log(searchResults);
-
   return (
     <div className="container mx-auto p-5 py-12">
-      Results: {searchResults.total_count}
       <div className="py-12">
-        {searchResults.items.map((user: User) => (
+        {searchResults.map((user: User) => (
           <div key={user.id} className="flex items-center justify-between p-4 my-2 bg-gray-100 rounded-md">
             <div>
               <img src={user.avatar_url} alt={user.login} className="w-12 h-12 rounded-full" />
