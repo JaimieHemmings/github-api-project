@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useReducer, useEffect, ReactNode } from 'react';
+import githubReducer from './GithubReducer';
 
 type User = {
   login: string;
@@ -9,8 +10,10 @@ type User = {
 
 type GithubContextType = {
   users: User[];
+  searchResults?: User[];
   loading: boolean;
   fetchUsers: () => Promise<void>;
+  fetchSearchResults: (query: string) => Promise<void>;
 };
 
 const GithubContext = createContext<GithubContextType | undefined>(undefined);
@@ -23,11 +26,16 @@ type GithubProviderProps = {
 };
 
 export const GithubProvider: React.FC<GithubProviderProps> = ({ children }) => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const initialState = {
+    users: [],
+    loading: false,
+    searchResults: [],
+  }
+
+  const [state, dispatch] = useReducer(githubReducer, initialState);
 
   const fetchUsers = async () => {
-    setLoading(true);
+    setLoading();
     const response = await fetch(`${GITHUB_URL}/users`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`,
@@ -35,16 +43,42 @@ export const GithubProvider: React.FC<GithubProviderProps> = ({ children }) => {
     });
 
     const data: User[] = await response.json();
-    setUsers(data.slice(0, 12));
-    setLoading(false);
+    dispatch({
+      type: 'FETCH_USERS',
+      payload: data.slice(0, 12),
+    })
   };
+
+  const fetchSearchResults = async (query: string) => {
+    setLoading();
+    const response = await fetch(`${GITHUB_URL}/search/users?q=${query}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+
+    const data = await response.json();
+    dispatch({
+      type: 'FETCH_SEARCH_RESULTS',
+      payload: data,
+    });
+  };
+
+  // Set loading
+  const setLoading = () => dispatch({ type: 'SET_LOADING', payload: true });
 
   useEffect(() => {
     fetchUsers();
   }, []);
 
   return (
-    <GithubContext.Provider value={{ users, loading, fetchUsers }}>
+    <GithubContext.Provider value={{
+        users: state.users,
+        loading: state.loading,
+        searchResults: state.searchResults,
+        fetchUsers,
+        fetchSearchResults
+      }}>
       {children}
     </GithubContext.Provider>
   );

@@ -8,10 +8,10 @@ import './App.css'
 import HomeRoute from './pages/HomeRoute';
 import AboutRoute from './pages/AboutRoute';
 import ContactRoute from './pages/ContactRoute';
+import SearchResults from './pages/SearchResults';
 import NotFoundRoute from './pages/NotFoundRoute';
 
-function App() {
-
+const App: React.FC = () => {
   return (
     <GithubProvider>
       <BrowserRouter>
@@ -21,6 +21,7 @@ function App() {
           <Route path="/" element={<HomeRoute />} />
           <Route path="/about" element={<AboutRoute />} />
           <Route path="/contact" element={<ContactRoute />} />
+          <Route path="/search-results" element={<SearchResults />} />
           <Route path="/notfound" element={<NotFoundRoute />} />
           <Route path="/*" element={<NotFoundRoute />} />
         </Routes>
