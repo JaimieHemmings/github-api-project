@@ -1,12 +1,10 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 const ContactRoute = () => {
   return (
     <div className="container mx-auto py-24">
-      {/* Contact Information */}
       <Card className="p-6 shadow-none border-none">
         <CardHeader>
           <CardTitle className="text-3xl font-bold">Contact Information</CardTitle>
