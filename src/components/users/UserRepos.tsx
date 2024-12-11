@@ -30,7 +30,7 @@ const UserRepos = () => {
     if (user?.login) {
       fetchRepos(user.login);
     }
-  }, [user, fetchRepos]);
+  }, [user]);
 
   if (loading) {
     return <LoadingSpinner />;
