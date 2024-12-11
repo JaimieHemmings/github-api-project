@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+# GithubRef
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern GitHub user explorer built with Vite, TypeScript, and ShadcN UI components. This project demonstrates the integration of GitHub's API with modern web technologies and component libraries.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search GitHub users
+- View detailed user profiles
+- Responsive design
+- Real-time search results
+- Modern UI components
+- Error handling and loading states
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [Vite](https://vitejs.dev/) - Next Generation Frontend Tooling
+- [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types
+- [ShadcN UI](https://ui.shadcn.com/) - Re-usable components built with Radix UI and Tailwind CSS
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [React Router](https://reactrouter.com/) - Client-side routing
+- [GitHub API](https://docs.github.com/en/rest) - Access to GitHub data
 
-- Configure the top-level `parserOptions` property like this:
+## 📦 Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/githubref.git
+```
+2. Install Dependencies
+```bash
+npm install
+```
+3. Create a .env file in the root directory and add your GitHub token:
+```bash
+VITE_GITHUB_TOKEN=your_github_token_here
+VITE_GITHUB_URL=https://api.github.com
+```
+4. Start the development server
+```bash
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🎯 Usage
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Navigate to the homepage
+2. Enter a GitHub username in the search bar
+3. View user details and repositories
+4. Explore different users through the interface
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 🔑 Environment Variables
+
+Required environment variables:
+
+- *VITE_GITHUB_TOKEN* - Your GitHub Personal Access Token
+- *VITE_GITHUB_URL* - GitHub API URL
+
+## 🙏 Acknowledgements
+
+- [Shadcn/UI](https://ui.shadcn.com/) for the amazing component library
+- [GitHub API](https://docs.github.com/en/rest?apiVersion=2022-11-28) for providing the data

@@ -67,7 +67,20 @@ const UserRoute: React.FC = () => {
                 <h1 className="text-2xl font-bold">{user.login}</h1>    
                 <p><strong>Location:</strong> {user.location}</p>
                 <p>{user.bio}</p>
-                <p>{user.blog}</p>
+                  {/* if user.blog is not empty */}
+                  {user.blog && (
+                  <p>
+                    <a
+                      href={user.blog.startsWith("http://") || user.blog.startsWith("https://")
+                        ? user.blog
+                        : `https://${user.blog}` }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {user.blog}
+                    </a>
+                  </p>
+                    )}
                 <Button>
                   <a
                     href={user.html_url}
