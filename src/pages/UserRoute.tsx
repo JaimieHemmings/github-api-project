@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGithubContext } from '@/context/github/GithubContext';
-import {FaCodepen, FaStore, FaUserFriends, FaUsers} from 'react-icons/fa';
+import {FaCodepen, FaStore, FaUserFriends, FaUsers, FaTwitter, FaHome, FaMoneyBill} from 'react-icons/fa';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -63,43 +63,65 @@ const UserRoute: React.FC = () => {
               <AvatarImage src={user.avatar_url} />
               <AvatarFallback>{user.login}</AvatarFallback>
             </Avatar>
-              <div className="py-12 flex flex-col justify-between gap-4">
-                <h1 className="text-2xl font-bold">{user.login}</h1>    
-                <p><strong>Location:</strong> {user.location}</p>
-                <p>{user.bio}</p>
-                  {/* if user.blog is not empty */}
-                  {user.blog && (
-                  <p>
-                    <a
-                      href={user.blog.startsWith("http://") || user.blog.startsWith("https://")
-                        ? user.blog
-                        : `https://${user.blog}` }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {user.blog}
-                    </a>
-                  </p>
-                    )}
-                <Button>
-                  <a
-                    href={user.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >
-                    View GitHub Profile
-                  </a>
-                </Button>
-              </div>
+            <h1 className="text-2xl font-bold">{user.login}</h1>  
             </CardHeader>
           </div>
-          <div className="basis-2/3">
-            <p><strong>Twitter:</strong> {user.twitter_username}</p>
-            <p><FaUserFriends className="inline-block" /> <strong>Followers:</strong> {user.followers}</p>
-            <p><FaUsers className="inline-block" /> <strong>Following:</strong> {user.following}</p>
-            <p><FaCodepen className="inline-block" /> <strong>Public Repos:</strong> {user.public_repos}</p>
-            <p><FaStore className="inline-block" /> <strong>Public Gists:</strong> {user.public_gists}</p>
-            <p><strong>Hirable:</strong> {user.hireable ? "Yes" : "No"}</p>
+          <div className="basis-2/3 flex flex-col gap-2">
+            {user.location && (
+              <p><strong>Location:</strong> {user.location}</p>
+            )}
+            {user.bio && (
+              <p>{user.bio}</p>
+            )}
+            {user.blog && (
+            <p>
+              <FaHome className="text-2xl inline-block" />
+              <a
+                href={user.blog.startsWith("http://") || user.blog.startsWith("https://")
+                  ? user.blog
+                  : `https://${user.blog}` }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-2"
+              >
+                {user.blog}
+              </a>
+            </p>
+            )}
+            {user.twitter_username && (
+              <p><FaTwitter className="text-2xl inline-block" /> <a href={`https://x.com/${user.twitter_username}`}>https://x.com/{user.twitter_username}</a></p>
+            )}
+            <div className="flex md:flex-row justify-between gap-4">
+              <div className="flex flex-col gap-2 justify-center text-center py-12">
+                <FaUserFriends className="inline-block mx-auto text-2xl" /> 
+                <p><strong>Followers:</strong> {user.followers}</p>
+
+              </div>
+              <div className="flex flex-col gap-2 justify-center text-center py-12">
+                <FaUsers className="inline-block mx-auto text-2xl" /> 
+                <p><strong>Following:</strong> {user.following}</p>
+              </div>
+              <div className="flex flex-col gap-2 justify-center text-center py-12">
+                <FaCodepen className="inline-block mx-auto text-2xl" /> 
+                <p><strong>Public Repos:</strong> {user.public_repos}</p>  
+              </div>
+              <div className="flex flex-col gap-2 justify-center text-center py-12">
+                <FaStore className="inline-block mx-auto text-2xl" /> 
+                <p><strong>Public Gists:</strong> {user.public_gists}</p>                
+              </div>
+              {user.hireable && (
+                <Button className="m-2"><FaMoneyBill className="text-2xl inline-block" />Hirable</Button>
+              )}
+            </div>  
+            <Button className="inline w-[200px]">
+              <a
+                href={user.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                View GitHub Profile
+              </a>
+            </Button>
           </div>
         </div>
       </Card>
