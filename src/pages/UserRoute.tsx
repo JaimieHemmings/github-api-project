@@ -6,6 +6,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import UserRepos from '@/components/users/UserRepos';
 
 const UserRoute: React.FC = () => {
   const { getUser, user, loading } = useGithubContext();
@@ -63,10 +64,20 @@ const UserRoute: React.FC = () => {
               <AvatarImage src={user.avatar_url} />
               <AvatarFallback>{user.login}</AvatarFallback>
             </Avatar>
+            {user.hireable && (
+              <div className="flex flex-col justify-center py-3">
+                <Button>
+                  <FaMoneyBill className="text-2xl inline-block" />
+                  Hirable
+                </Button>
+              </div>
+            )}
             <h1 className="text-2xl font-bold">{user.login}</h1>  
+            
             </CardHeader>
           </div>
           <div className="basis-2/3 flex flex-col gap-2">
+            
             {user.location && (
               <p><strong>Location:</strong> {user.location}</p>
             )}
@@ -91,11 +102,10 @@ const UserRoute: React.FC = () => {
             {user.twitter_username && (
               <p><FaTwitter className="text-2xl inline-block" /> <a href={`https://x.com/${user.twitter_username}`}>https://x.com/{user.twitter_username}</a></p>
             )}
-            <div className="flex md:flex-row justify-between gap-4">
+            <div className="flex md:flex-row justify-between gap-4 align-middle">
               <div className="flex flex-col gap-2 justify-center text-center py-12">
                 <FaUserFriends className="inline-block mx-auto text-2xl" /> 
                 <p><strong>Followers:</strong> {user.followers}</p>
-
               </div>
               <div className="flex flex-col gap-2 justify-center text-center py-12">
                 <FaUsers className="inline-block mx-auto text-2xl" /> 
@@ -109,9 +119,6 @@ const UserRoute: React.FC = () => {
                 <FaStore className="inline-block mx-auto text-2xl" /> 
                 <p><strong>Public Gists:</strong> {user.public_gists}</p>                
               </div>
-              {user.hireable && (
-                <Button className="m-2"><FaMoneyBill className="text-2xl inline-block" />Hirable</Button>
-              )}
             </div>  
             <Button className="inline w-[200px]">
               <a
@@ -125,6 +132,7 @@ const UserRoute: React.FC = () => {
           </div>
         </div>
       </Card>
+      <UserRepos />
     </div>
   );
 };

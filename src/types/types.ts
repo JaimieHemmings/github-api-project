@@ -21,4 +21,5 @@ export interface GithubStateType {
   users: UserType[];
   searchResults: UserType[];
   loading: boolean;
+  repos: any[];
 };

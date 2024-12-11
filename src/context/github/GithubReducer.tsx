@@ -11,6 +11,7 @@ type GithubState = {
   users: User[];
   searchResults: User[];
   loading: boolean;
+  repos: any[];
 };
 
 // Define action types
@@ -18,7 +19,8 @@ type GithubAction =
   | { type: 'FETCH_USERS'; payload: User[] }
   | { type: 'GET_USER'; payload: User }
   | { type: 'FETCH_SEARCH_RESULTS'; payload: User[] }
-  | { type: 'SET_LOADING'; payload: boolean };
+  | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'FETCH_REPOS'; payload: any[] };
 
 // Reducer function
 const githubReducer = (state: GithubState, action: GithubAction): GithubState => {
@@ -41,6 +43,13 @@ const githubReducer = (state: GithubState, action: GithubAction): GithubState =>
       return {
         ...state,
         searchResults: action.payload,
+        loading: false
+      };
+
+    case 'FETCH_REPOS':
+      return {
+        ...state,
+        repos: action.payload,
         loading: false
       };
     

@@ -7,6 +7,7 @@ type GithubContextType = GithubStateType & {
   fetchUsers: () => Promise<void>;
   fetchSearchResults: (query: string) => Promise<void>;
   getUser: (login: string) => Promise<void>;
+  fetchRepos: (login: string) => Promise<void>;
 };
 
 type GithubProviderProps = {
@@ -23,6 +24,7 @@ const initialState: GithubStateType = {
   users: [],
   searchResults: [],
   loading: false,
+  repos: [],
 };
 
 // Context Creation
@@ -93,6 +95,13 @@ export const GithubProvider: React.FC<GithubProviderProps> = ({ children }) => {
     );
   }, []);
 
+  const fetchRepos = useCallback((login: string) => {
+    return fetchFromGitHub(
+      `${GITHUB_URL}/users/${login}/repos?sort=created:asc`, 
+      'FETCH_REPOS'
+    );
+  }, []);
+
   // Initial users fetch
   useEffect(() => {
     fetchUsers();
@@ -105,6 +114,7 @@ export const GithubProvider: React.FC<GithubProviderProps> = ({ children }) => {
         fetchUsers,
         fetchSearchResults,
         getUser,
+        fetchRepos,
       }}
     >
       {children}
